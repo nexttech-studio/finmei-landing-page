@@ -1,0 +1,2424 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>document.documentElement.classList.add("js");</script>
+
+    <title>FinMEI | Controle financeiro para MEI em 5 minutos por dia</title>
+    <meta name="description"
+        content="Controle o caixa do seu MEI em 5 minutos por dia: importação automática do banco, cálculo do DAS e relatórios prontos. Teste grátis por 14 dias, sem cartão." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0a0d0f" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- TODO: trocar pelo domínio real -->
+    <link rel="canonical" href="https://www.finmei.com.br/" />
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300e87a'/%3E%3Ctext x='16' y='22' font-size='16' font-weight='700' text-anchor='middle' font-family='sans-serif' fill='%23000'%3EF%3C/text%3E%3C/svg%3E" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="FinMEI" />
+    <meta property="og:title" content="FinMEI | Controle financeiro para MEI em 5 minutos por dia" />
+    <meta property="og:description"
+        content="Importação automática do banco, cálculo do DAS e relatórios prontos. Teste grátis por 14 dias, sem cartão." />
+    <meta property="og:url" content="https://www.finmei.com.br/" />
+    <!-- TODO: criar imagem 1200x630 -->
+    <meta property="og:image" content="https://www.finmei.com.br/og-image.png" />
+    <meta property="og:image:alt" content="Painel do FinMEI com lucro real e impostos do MEI" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Dados estruturados (sem aggregateRating: só adicione com avaliações reais e verificáveis) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "FinMEI",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "iOS, Android",
+        "inLanguage": "pt-BR",
+        "description": "Controle financeiro para MEI: importação automática de transações, cálculo do DAS e relatórios mensais.",
+        "offers": {
+          "@type": "Offer",
+          "price": "49.00",
+          "priceCurrency": "BRL"
+        }
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Figtree:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
+
+    <style>
+        /* ============================================================
+         TOKENS & RESET
+      ============================================================ */
+        :root {
+            color-scheme: dark;
+            --bg: #0a0d0f;
+            --surface: #111518;
+            --surface2: #181d21;
+            --border: rgba(255, 255, 255, 0.07);
+            --accent: #00e87a;
+            --accent2: #00b85f;
+            --muted: #8791a0;
+            /* era #5a6370 (contraste ~3:1); agora ~5.9:1 */
+            --text: #e8edf2;
+            --text2: #a3adb8;
+            --gold: #f5c842;
+            --radius-lg: 22px;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --font-display: "Work Sans", "Segoe UI", system-ui, sans-serif;
+            --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 24px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Títulos: fonte mais compacta, peso 700 e tracking mais suave */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-display);
+            font-stretch: 90%;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            text-wrap: balance;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 6px;
+        }
+
+        /* ============================================================
+         UTILITIES
+      ============================================================ */
+        .container {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        /* Reveal: só esconde se JS estiver ativo; usa `translate` para não
+         conflitar com o `transform` dos hovers e `animation` para não ser
+         sobrescrito pelos `transition` dos componentes. */
+        .js .reveal {
+            opacity: 0;
+        }
+
+        .js .reveal.visible {
+            animation-name: reveal-in;
+            animation-duration: 0.65s;
+            animation-timing-function: var(--ease);
+            animation-fill-mode: both;
+        }
+
+        @keyframes reveal-in {
+            from {
+                opacity: 0;
+                translate: 0 32px;
+            }
+
+            to {
+                opacity: 1;
+                translate: 0 0;
+            }
+        }
+
+        .reveal-delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .reveal-delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        /* ============================================================
+         BUTTONS
+      ============================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-display);
+            font-stretch: 90%;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 100px;
+            padding: 14px 32px;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #1fffa0;
+            box-shadow: 0 0 32px rgba(0, 232, 122, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .btn-outline:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-lg {
+            font-size: 17px;
+            padding: 18px 40px;
+        }
+
+        /* ============================================================
+         NAVBAR
+      ============================================================ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 72px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar__inner {
+            max-width: 1100px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar__logo {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .navbar__logo span {
+            color: var(--accent);
+        }
+
+        .navbar__menu {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+        }
+
+        .navbar__link {
+            display: block;
+            padding: 0.5rem 0.9rem;
+            color: var(--muted);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: color .2s, background .2s;
+        }
+
+        .navbar__link:hover,
+        .navbar__link.active {
+            color: var(--text);
+            background: rgba(255, 255, 255, .06);
+        }
+
+        .navbar__link.active {
+            box-shadow: inset 0 -2px 0 var(--accent);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .navbar__cta {
+            margin-left: 0.5rem;
+            padding: 0.5rem 1.1rem;
+            background: var(--accent);
+            color: #0b1a13;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Botão hambúrguer */
+        .navbar__toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: none;
+            border: 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .navbar__toggle span,
+        .navbar__toggle span::before,
+        .navbar__toggle span::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform .25s, opacity .25s, top .25s;
+        }
+
+        .navbar__toggle span {
+            top: 21px;
+        }
+
+        .navbar__toggle span::before {
+            top: -7px;
+            left: 0;
+        }
+
+        .navbar__toggle span::after {
+            top: 7px;
+            left: 0;
+        }
+
+        .navbar__toggle[aria-expanded="true"] span {
+            background: transparent;
+        }
+
+        .navbar__toggle[aria-expanded="true"] span::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .navbar__toggle[aria-expanded="true"] span::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        /* ---------- MOBILE ---------- */
+        @media (max-width: 768px) {
+            .navbar__toggle {
+                display: block;
+            }
+
+            .navbar__menu {
+                position: absolute;
+                top: var(--nav-h);
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 0.5rem 1.25rem 1.25rem;
+                background: var(--bg);
+                border-bottom: 1px solid var(--line);
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-8px);
+                transition: opacity .25s, transform .25s, visibility .25s;
+            }
+
+            .navbar__menu.open {
+                visibility: visible;
+                opacity: 1;
+                transform: none;
+            }
+
+            .navbar__link {
+                padding: 0.9rem 0.5rem;
+                border-bottom: 1px solid var(--line);
+                border-radius: 0;
+            }
+
+            .navbar__link.active {
+                box-shadow: none;
+                color: var(--accent);
+                background: none;
+            }
+
+            .navbar__cta {
+                margin: 1rem 0 0;
+                text-align: center;
+                padding: 0.8rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+            }
+        }
+
+        /* ============================================================
+         HERO
+      ============================================================ */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(ellipse at center, rgba(0, 232, 122, 0.13) 0%, transparent 65%);
+            animation: drift 8s ease-in-out infinite alternate;
+        }
+
+        .hero-bg::after {
+            content: "";
+            position: absolute;
+            bottom: -10%;
+            right: -5%;
+            width: 55%;
+            height: 55%;
+            background: radial-gradient(ellipse at center, rgba(0, 184, 95, 0.08) 0%, transparent 65%);
+            animation: drift 11s ease-in-out infinite alternate-reverse;
+        }
+
+        .hero-image,
+        .hero-image img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
+
+        /* escurece a imagem e garante leitura do texto */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(90deg,
+                    color-mix(in srgb, var(--bg) 95%, transparent) 0%,
+                    color-mix(in srgb, var(--bg) 80%, transparent) 45%,
+                    color-mix(in srgb, var(--bg) 45%, transparent) 100%),
+                linear-gradient(180deg,
+                    transparent 70%,
+                    var(--bg) 100%);
+        }
+
+        /* brilhos verdes e grid ficam acima da imagem */
+        .hero-bg::before,
+        .hero-bg::after,
+        .hero-grid {
+            z-index: 2;
+        }
+
+        /* no mobile o texto ocupa a tela toda: overlay mais uniforme */
+        @media (max-width: 767px) {
+            .hero-overlay {
+                background: color-mix(in srgb, var(--bg) 82%, transparent);
+            }
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+        }
+
+        @keyframes drift {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(3%, 4%) scale(1.05);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 16px;
+            margin-bottom: 32px;
+            font-size: 13px;
+            color: var(--text2);
+            animation: fadeInDown 0.6s ease both;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(40px, 6.5vw, 76px);
+            font-weight: 700;
+            font-stretch: 85%;
+            letter-spacing: -0.025em;
+            line-height: 1.04;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.7s 0.1s ease both;
+        }
+
+        .hero-title .line-green {
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text2);
+            max-width: 560px;
+            margin-bottom: 44px;
+            line-height: 1.7;
+            animation: fadeInUp 0.7s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.7s 0.3s ease both;
+        }
+
+        .hero-note {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 48px;
+        }
+
+        .hero-social-proof {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.7s 0.4s ease both;
+        }
+
+        .avatars {
+            display: flex;
+        }
+
+        .avatars .av {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--bg);
+            margin-left: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .avatars .av:first-child {
+            margin-left: 0;
+        }
+
+        .av-a {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .av-b {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .av-c {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .av-d {
+            background: linear-gradient(135deg, #fa709a, #fee140);
+        }
+
+        .sp-text {
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .sp-text strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .sp-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+        }
+
+        .stars {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* ============================================================
+         BRANDS
+      ============================================================ */
+        #brands {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brands-inner {
+            display: flex;
+            align-items: center;
+            gap: 24px 48px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .brands-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .brands-list {
+            display: flex;
+            align-items: center;
+            gap: 16px 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .brand-logo {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--muted);
+        }
+
+        /* ============================================================
+         SECTIONS (header comum)
+      ============================================================ */
+        #problem,
+        #how,
+        #benefits,
+        #social-proof,
+        #pricing,
+        #faq,
+        #final-cta {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 64px;
+        }
+
+        .section-title {
+            font-size: clamp(30px, 4vw, 48px);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-sub {
+            font-size: 17px;
+            color: var(--text2);
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+         PROBLEM / AGITATION / SOLUTION
+      ============================================================ */
+        .pas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .pas-card {
+            background: var(--surface);
+            padding: 48px 40px;
+            transition: background 0.3s;
+        }
+
+        .pas-card:hover {
+            background: var(--surface2);
+        }
+
+        .pas-card--solution {
+            grid-column: span 2;
+            background: rgba(0, 232, 122, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pas-card--solution:hover {
+            background: rgba(0, 232, 122, 0.08);
+        }
+
+        .pas-card--solution::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .pas-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .pas-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .label-problem {
+            color: #ff6b6b;
+        }
+
+        .label-agitate {
+            color: var(--gold);
+        }
+
+        .label-solution {
+            color: var(--accent);
+        }
+
+        .pas-title {
+            font-size: clamp(20px, 2.5vw, 26px);
+            margin-bottom: 16px;
+        }
+
+        .pas-text {
+            font-size: 15px;
+            color: var(--text2);
+            line-height: 1.75;
+        }
+
+        .pas-text+.pas-text {
+            margin-top: 1em;
+        }
+
+        .pain-list {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .pain-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text2);
+        }
+
+        .pain-list li::before {
+            content: "×" / "";
+            color: #ff6b6b;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+         HOW IT WORKS
+      ============================================================ */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .steps::before {
+            content: "";
+            position: absolute;
+            top: 72px;
+            left: calc(16.66% + 40px);
+            right: calc(16.66% + 40px);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .step {
+            background: var(--surface);
+            padding: 48px 36px;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .step:hover {
+            background: var(--surface2);
+        }
+
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(0, 232, 122, 0.1);
+            border: 1.5px solid rgba(0, 232, 122, 0.3);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--accent);
+            margin-bottom: 28px;
+        }
+
+        .step-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .step-title {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .step-text {
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.75;
+        }
+
+        /* ============================================================
+         BENEFITS
+      ============================================================ */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .benefit-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .benefit-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            border-color: rgba(0, 232, 122, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .benefit-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .benefit-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .benefit-title {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .benefit-text {
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.75;
+        }
+
+        .benefit-metric {
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(0, 232, 122, 0.08);
+            border-radius: 100px;
+            padding: 5px 14px;
+        }
+
+        /* ============================================================
+         SOCIAL PROOF
+      ============================================================ */
+        #social-proof {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #social-proof::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 232, 122, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 64px;
+            position: relative;
+        }
+
+        .metric-block {
+            background: var(--surface);
+            padding: 36px 28px;
+            text-align: center;
+        }
+
+        .metric-num {
+            font-family: var(--font-display);
+            font-stretch: 90%;
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            font-variant-numeric: tabular-nums;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            position: relative;
+        }
+
+        .testi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .testi-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .testi-quote {
+            font-size: 15px;
+            color: var(--text2);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-style: italic;
+            flex: 1;
+        }
+
+        .testi-quote p::before {
+            content: "\201C" / "";
+            color: var(--accent);
+            font-style: normal;
+            font-size: 24px;
+        }
+
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .testi-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 18px;
+            color: #000;
+        }
+
+        .ta-green {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+        }
+
+        .ta-blue {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .ta-gold {
+            background: linear-gradient(135deg, #f5c842, #f09819);
+        }
+
+        .testi-name {
+            font-family: var(--font-display);
+            font-stretch: 90%;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            font-style: normal;
+        }
+
+        .testi-role {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .testi-result {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* ============================================================
+         PRICING
+      ============================================================ */
+        .pricing-card {
+            max-width: 540px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid rgba(0, 232, 122, 0.3);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 0 80px rgba(0, 232, 122, 0.08);
+        }
+
+        .pricing-badge {
+            background: var(--accent);
+            color: #000;
+            font-family: var(--font-display);
+            font-stretch: 90%;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 8px 12px;
+        }
+
+        .pricing-body {
+            padding: 48px;
+        }
+
+        .pricing-plan {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .pricing-price {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .price-currency {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text2);
+            padding-bottom: 8px;
+        }
+
+        .price-value {
+            font-family: var(--font-display);
+            font-stretch: 90%;
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .price-period {
+            font-size: 16px;
+            color: var(--text2);
+            padding-bottom: 12px;
+        }
+
+        .pricing-trial {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 36px;
+        }
+
+        .pricing-features {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--text2);
+        }
+
+        .pricing-features li::before {
+            content: "✓" / "";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(0, 232, 122, 0.15);
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            padding: 18px;
+        }
+
+        .pricing-guarantee {
+            margin-top: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* ============================================================
+         FAQ
+      ============================================================ */
+        .faq-list {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            background: var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .faq-item {
+            background: var(--surface);
+        }
+
+        .faq-item h3 {
+            font: inherit;
+            letter-spacing: normal;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            cursor: pointer;
+            text-align: left;
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: var(--surface2);
+        }
+
+        .faq-question:focus-visible {
+            outline-offset: -3px;
+        }
+
+        .faq-chevron {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: transform 0.3s, background 0.2s;
+        }
+
+        .faq-item.open .faq-chevron {
+            transform: rotate(180deg);
+            background: rgba(0, 232, 122, 0.15);
+            color: var(--accent);
+        }
+
+        /* Altura animada sem max-height fixo; conteúdo fechado fica invisível p/ leitores de tela e tab */
+        .faq-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            visibility: hidden;
+            transition: grid-template-rows 0.4s var(--ease), visibility 0s linear 0.4s;
+        }
+
+        .faq-item.open .faq-answer {
+            grid-template-rows: 1fr;
+            visibility: visible;
+            transition: grid-template-rows 0.4s var(--ease), visibility 0s;
+        }
+
+        .faq-answer-inner {
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .faq-answer-inner p {
+            padding: 0 32px 28px;
+            font-size: 15px;
+            color: var(--text2);
+            line-height: 1.75;
+        }
+
+        /* ============================================================
+         FINAL CTA
+      ============================================================ */
+        .cta-box {
+            background: var(--surface);
+            border: 1px solid rgba(0, 232, 122, 0.2);
+            border-radius: 28px;
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .cta-box-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(0, 232, 122, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-size: clamp(32px, 5vw, 60px);
+            font-stretch: 85%;
+            letter-spacing: -0.025em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .cta-title .accent {
+            color: var(--accent);
+        }
+
+        .cta-sub {
+            font-size: 18px;
+            color: var(--text2);
+            max-width: 480px;
+            margin: 0 auto 44px;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .cta-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .cta-fine {
+            font-size: 13px;
+            color: var(--muted);
+            position: relative;
+        }
+
+        /* ============================================================
+         FOOTER
+      ============================================================ */
+        footer {
+            padding: 48px 0 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-stretch: 90%;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* Faíscas do botão (micro-interação) */
+        .spark {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            transform: translate(-50%, -50%);
+            animation: sparkFly 0.6s ease-out forwards;
+        }
+
+        @keyframes sparkFly {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0);
+            }
+        }
+
+        /* ============================================================
+         RESPONSIVE
+      ============================================================ */
+        @media (max-width: 900px) {
+
+            #problem,
+            #how,
+            #benefits,
+            #social-proof,
+            #pricing,
+            #faq,
+            #final-cta {
+                padding: 72px 0;
+            }
+
+            .section-header {
+                margin-bottom: 48px;
+            }
+
+            .pas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pas-card--solution {
+                grid-column: span 1;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta-box {
+                padding: 56px 28px;
+            }
+
+            .pricing-body {
+                padding: 36px 28px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            #hero {
+                padding: 88px 0 56px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-social-proof {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .sp-divider {
+                display: none;
+            }
+
+            .btn,
+            .btn-lg {
+                padding: 16px 24px;
+                font-size: 16px;
+            }
+
+            .pas-card,
+            .step {
+                padding: 36px 24px;
+            }
+
+            .benefit-card,
+            .testi-card {
+                padding: 28px 24px;
+            }
+
+            .metric-block {
+                padding: 28px 16px;
+            }
+
+            .pricing-body {
+                padding: 32px 22px;
+            }
+
+            .price-value {
+                font-size: 60px;
+            }
+
+            .cta-box {
+                padding: 44px 20px;
+            }
+
+            .cta-actions .btn {
+                width: 100%;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .faq-question {
+                padding: 20px;
+                font-size: 15px;
+            }
+
+            .faq-answer-inner p {
+                padding: 0 20px 24px;
+            }
+        }
+
+        /* ============================================================
+         MOVIMENTO REDUZIDO
+      ============================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                transition-delay: 0s !important;
+            }
+
+            .js .reveal {
+                opacity: 1;
+            }
+
+            .js .reveal.visible {
+                animation: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR FINMEI -->
+    <header class="navbar">
+        <nav class="navbar__inner" aria-label="Navegação principal">
+
+            <!-- Logo -->
+            <a href="#hero" class="navbar__logo" aria-label="FinMEI - Início">
+                Fin<span>MEI</span>
+            </a>
+
+            <!-- Links -->
+            <ul class="navbar__menu" id="nav-menu">
+                <li><a href="#problem" class="navbar__link">O problema</a></li>
+                <li><a href="#how" class="navbar__link">Como funciona</a></li>
+                <li><a href="#benefits" class="navbar__link">Benefícios</a></li>
+                <li><a href="#pricing" class="navbar__link">Planos</a></li>
+                <li><a href="#faq" class="navbar__link">FAQ</a></li>
+
+                <li class="navbar__mobile-cta">
+                    <a href="#pricing" class="navbar__cta">
+                        Testar grátis <span aria-hidden="true">→</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- CTA Desktop -->
+            <a href="#pricing" class="navbar__cta navbar__cta--desktop">
+                Testar grátis <span aria-hidden="true">→</span>
+            </a>
+
+            <!-- Hamburger -->
+            <button class="navbar__toggle" id="nav-toggle" type="button" aria-label="Abrir menu"
+                aria-controls="nav-menu" aria-expanded="false">
+                <span></span>
+            </button>
+
+        </nav>
+    </header>
+
+    <main>
+        <!-- ============================ HERO ============================ -->
+        <section id="hero" aria-labelledby="hero-title">
+            <div class="hero-bg" aria-hidden="true">
+                <picture class="hero-image">
+                    <source media="(min-width: 768px)" srcset="images/hero-desktop.webp" />
+                    <img src="images/hero-mobile.webp" alt="" width="750" height="1000" fetchpriority="high"
+                        decoding="async" />
+                </picture>
+                <div class="hero-overlay"></div>
+                <div class="hero-grid"></div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <p class="hero-badge">
+                        <span class="dot" aria-hidden="true"></span>
+                        Novo · Controle financeiro para MEI
+                    </p>
+
+                    <h1 class="hero-title" id="hero-title">
+                        Suas finanças no
+                        <span class="line-green">controle em 5 min.</span> Todo dia.
+                    </h1>
+
+                    <p class="hero-sub">
+                        Pare de perder dinheiro por não saber o que entra e o que sai. O
+                        FinMEI organiza tudo automaticamente — sem planilha, sem contador,
+                        sem dor de cabeça.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#pricing" class="btn btn-primary btn-lg">
+                            Testar grátis por 14 dias <span aria-hidden="true">→</span>
+                        </a>
+                        <a href="#how" class="btn btn-outline btn-lg">Ver como funciona</a>
+                    </div>
+                    <p class="hero-note">Sem cartão de crédito · Cancela quando quiser</p>
+
+                    <!-- TODO: trocar pelos números reais ou remover até ter dados verificáveis -->
+                    <div class="hero-social-proof">
+                        <div class="avatars" aria-hidden="true">
+                            <div class="av av-a">A</div>
+                            <div class="av av-b">B</div>
+                            <div class="av av-c">C</div>
+                            <div class="av av-d">D</div>
+                        </div>
+                        <p class="sp-text">
+                            <strong>+3.000</strong> empreendedores já controlam suas finanças
+                        </p>
+                        <div class="sp-divider" aria-hidden="true"></div>
+                        <div>
+                            <div class="stars" role="img" aria-label="Avaliação 4,9 de 5 estrelas">★★★★★</div>
+                            <p class="sp-text"><strong>4,9/5</strong> de avaliação média</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ BRANDS ============================ -->
+        <section id="brands" aria-label="Integrações com bancos">
+            <div class="container">
+                <div class="brands-inner">
+                    <p class="brands-label">Integra com</p>
+                    <ul class="brands-list">
+                        <li class="brand-logo">Nubank</li>
+                        <li class="brand-logo">Mercado Pago</li>
+                        <li class="brand-logo">PicPay</li>
+                        <li class="brand-logo">Banco Inter</li>
+                        <li class="brand-logo">C6 Bank</li>
+                        <li class="brand-logo">Sicoob</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ PROBLEMA ============================ -->
+        <section id="problem" aria-labelledby="problem-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-label">O problema</p>
+                    <h2 class="section-title" id="problem-title">Você sabe quanto ganhou esse mês?</h2>
+                    <p class="section-sub">
+                        A maioria dos MEIs não sabe. E essa falta de controle custa caro —
+                        literalmente.
+                    </p>
+                </div>
+
+                <div class="pas-grid">
+                    <article class="pas-card reveal">
+                        <span class="pas-icon" aria-hidden="true">😩</span>
+                        <p class="pas-label label-problem">O problema</p>
+                        <h3 class="pas-title">O mês acabou e você não sabe onde foi o dinheiro</h3>
+                        <p class="pas-text">
+                            Você trabalha duro, os pedidos entram, mas no final do mês a
+                            conta bancária não reflete o esforço. Sem registro claro do que
+                            entra e sai, é impossível crescer.
+                        </p>
+                        <ul class="pain-list" aria-label="Problemas comuns">
+                            <li>Mistura conta pessoal com conta da empresa</li>
+                            <li>Não sabe se está tendo lucro ou prejuízo</li>
+                            <li>Guarda nota fiscal em papel ou esquece</li>
+                            <li>Planilha desatualizada há meses</li>
+                        </ul>
+                    </article>
+
+                    <article class="pas-card reveal reveal-delay-1">
+                        <span class="pas-icon" aria-hidden="true">📉</span>
+                        <p class="pas-label label-agitate">A consequência</p>
+                        <h3 class="pas-title">Sem controle hoje, crise financeira amanhã</h3>
+                        <!-- TODO: citar a fonte do dado "3x mais chance" ou reescrever sem número -->
+                        <p class="pas-text">
+                            MEIs que não acompanham as finanças têm 3x mais chance de fechar
+                            nos primeiros 2 anos. Não é falta de clientes — é falta de
+                            visibilidade sobre o próprio negócio.
+                        </p>
+                        <ul class="pain-list" aria-label="Consequências">
+                            <li>Impostos atrasados com multa</li>
+                            <li>Dívidas que poderiam ter sido evitadas</li>
+                            <li>Precificação errada e margem negativa</li>
+                            <li>Surpresas na declaração anual</li>
+                        </ul>
+                    </article>
+
+                    <article class="pas-card pas-card--solution reveal">
+                        <span class="pas-icon" aria-hidden="true">✅</span>
+                        <p class="pas-label label-solution">A solução</p>
+                        <h3 class="pas-title">FinMEI: controle financeiro do jeito que o MEI precisa</h3>
+                        <p class="pas-text">
+                            Desenvolvido especificamente para quem não tem contador, não tem
+                            tempo e não quer aprender contabilidade. Em menos de 5 minutos
+                            por dia, você tem uma visão clara de tudo — entradas, saídas,
+                            lucro real e impostos devidos.
+                        </p>
+                        <p class="pas-text">Sem jargão. Sem planilha. Sem estresse.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ COMO FUNCIONA ============================ -->
+        <section id="how" aria-labelledby="how-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-label">Como funciona</p>
+                    <h2 class="section-title" id="how-title">Três passos para ter tudo no controle</h2>
+                    <p class="section-sub">
+                        Você não precisa ser contador. Precisa só de 5 minutos por dia.
+                    </p>
+                </div>
+
+                <ol class="steps" role="list">
+                    <li class="step reveal">
+                        <div class="step-num" aria-hidden="true">01</div>
+                        <div class="step-icon" aria-hidden="true">🔗</div>
+                        <h3 class="step-title">Conecte sua conta bancária</h3>
+                        <p class="step-text">
+                            Integre seu banco em 2 cliques. As transações são importadas
+                            automaticamente — sem digitar nada manualmente.
+                        </p>
+                    </li>
+                    <li class="step reveal reveal-delay-2">
+                        <div class="step-num" aria-hidden="true">02</div>
+                        <div class="step-icon" aria-hidden="true">⚡</div>
+                        <h3 class="step-title">Confirme e categorize em segundos</h3>
+                        <p class="step-text">
+                            O FinMEI já sugere as categorias. Você apenas confirma ou ajusta
+                            — leva menos de 2 minutos por dia.
+                        </p>
+                    </li>
+                    <li class="step reveal reveal-delay-4">
+                        <div class="step-num" aria-hidden="true">03</div>
+                        <div class="step-icon" aria-hidden="true">📊</div>
+                        <h3 class="step-title">Veja o resumo e tome decisões</h3>
+                        <p class="step-text">
+                            Painel claro com lucro real, impostos estimados e comparativo
+                            mensal. Tudo que você precisa para crescer com segurança.
+                        </p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ============================ BENEFÍCIOS ============================ -->
+        <section id="benefits" aria-labelledby="benefits-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-label">Benefícios</p>
+                    <h2 class="section-title" id="benefits-title">O que muda no seu dia a dia</h2>
+                    <p class="section-sub">
+                        Benefícios concretos que empreendedores reais estão sentindo toda
+                        semana.
+                    </p>
+                </div>
+
+                <div class="benefits-grid">
+                    <article class="benefit-card reveal">
+                        <span class="benefit-icon" aria-hidden="true">⏱️</span>
+                        <h3 class="benefit-title">Recupere 4 horas por semana</h3>
+                        <p class="benefit-text">
+                            Chega de perder noites reorganizando planilha ou procurando
+                            comprovante. O FinMEI automatiza o trabalho chato para você
+                            focar no que gera dinheiro.
+                        </p>
+                        <span class="benefit-metric">↑ 4h/semana de volta</span>
+                    </article>
+
+                    <article class="benefit-card reveal reveal-delay-1">
+                        <span class="benefit-icon" aria-hidden="true">💰</span>
+                        <h3 class="benefit-title">Descubra onde está perdendo dinheiro</h3>
+                        <p class="benefit-text">
+                            Relatórios visuais mostram exatamente quais despesas estão
+                            engolindo sua margem. Na média, nossos usuários identificam
+                            R$480/mês de gastos que podem ser reduzidos.
+                        </p>
+                        <span class="benefit-metric">R$480/mês economizados</span>
+                    </article>
+
+                    <article class="benefit-card reveal reveal-delay-2">
+                        <span class="benefit-icon" aria-hidden="true">🧾</span>
+                        <h3 class="benefit-title">Zero surpresa na declaração anual</h3>
+                        <p class="benefit-text">
+                            O FinMEI já separa e calcula os impostos do MEI mensalmente.
+                            Quando chegar a hora da declaração anual (DASN-SIMEI), tudo já
+                            está organizado e pronto para você ou para o contador.
+                        </p>
+                        <span class="benefit-metric">Lembrete antes do vencimento do DAS</span>
+                    </article>
+
+                    <article class="benefit-card reveal reveal-delay-1">
+                        <span class="benefit-icon" aria-hidden="true">📈</span>
+                        <h3 class="benefit-title">Precifique certo e pare de perder margem</h3>
+                        <p class="benefit-text">
+                            Com o custo real de cada serviço na tela, você cobra o que deve
+                            cobrar — e para de trabalhar de graça sem perceber.
+                        </p>
+                        <span class="benefit-metric">Margem real visível</span>
+                    </article>
+
+                    <article class="benefit-card reveal reveal-delay-2">
+                        <span class="benefit-icon" aria-hidden="true">🏦</span>
+                        <h3 class="benefit-title">Separe pessoal do empresarial de vez</h3>
+                        <p class="benefit-text">
+                            A confusão entre conta PF e PJ é a principal causa de problemas
+                            fiscais. O FinMEI cria um limite claro e te avisa quando algo
+                            está indo para o lugar errado.
+                        </p>
+                        <span class="benefit-metric">Separação automática PF/PJ</span>
+                    </article>
+
+                    <article class="benefit-card reveal reveal-delay-3">
+                        <span class="benefit-icon" aria-hidden="true">📱</span>
+                        <h3 class="benefit-title">Tudo no celular, onde você estiver</h3>
+                        <p class="benefit-text">
+                            Registre uma venda ou despesa em segundos pelo app. Funciona no
+                            iOS e Android, mesmo sem internet — sincroniza quando conectar.
+                        </p>
+                        <span class="benefit-metric">App iOS + Android</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ PROVA SOCIAL ============================ -->
+        <!-- TODO: métricas e depoimentos abaixo são exemplos; substituir por dados e pessoas reais (com autorização) -->
+        <section id="social-proof" aria-labelledby="proof-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-label">Prova social</p>
+                    <h2 class="section-title" id="proof-title">Quem usa, não para de usar</h2>
+                    <p class="section-sub">
+                        Mais de 3.000 MEIs já controlam suas finanças com o FinMEI.
+                    </p>
+                </div>
+
+                <div class="metrics-row reveal">
+                    <div class="metric-block">
+                        <span class="metric-num">+3K</span>
+                        <p class="metric-label">MEIs ativos</p>
+                    </div>
+                    <div class="metric-block">
+                        <span class="metric-num">4,9★</span>
+                        <p class="metric-label">Avaliação média</p>
+                    </div>
+                    <div class="metric-block">
+                        <span class="metric-num">R$480</span>
+                        <p class="metric-label">Economia média/mês identificada</p>
+                    </div>
+                    <div class="metric-block">
+                        <span class="metric-num">5min</span>
+                        <p class="metric-label">Tempo médio por dia</p>
+                    </div>
+                </div>
+
+                <div class="testimonials">
+                    <figure class="testi-card reveal">
+                        <blockquote class="testi-quote">
+                            <p>
+                                Eu tinha pavor de olhar meu extrato bancário porque nunca sabia
+                                onde o dinheiro ia. Com o FinMEI, em duas semanas já tinha uma
+                                visão clara. Descobri que estava gastando R$600/mês em coisas
+                                que nem percebia.
+                            </p>
+                        </blockquote>
+                        <figcaption>
+                            <div class="testi-author">
+                                <div class="testi-avatar ta-green" aria-hidden="true">M</div>
+                                <div>
+                                    <p class="testi-name">Mariana Costa</p>
+                                    <p class="testi-role">Designer freelancer · São Paulo</p>
+                                </div>
+                            </div>
+                            <p class="testi-result"><span aria-hidden="true">💡</span> Economizou R$600/mês nos
+                                primeiros 30 dias</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="testi-card reveal reveal-delay-2">
+                        <blockquote class="testi-quote">
+                            <p>
+                                Comecei no MEI há 8 meses e estava completamente perdido na
+                                parte financeira. O FinMEI é a única ferramenta que faz
+                                sentido para quem não entende de contabilidade. Uso 5 minutos
+                                de manhã e meu dia já começa organizado.
+                            </p>
+                        </blockquote>
+                        <figcaption>
+                            <div class="testi-author">
+                                <div class="testi-avatar ta-blue" aria-hidden="true">R</div>
+                                <div>
+                                    <p class="testi-name">Rafael Souza</p>
+                                    <p class="testi-role">Eletricista autônomo · Belo Horizonte</p>
+                                </div>
+                            </div>
+                            <p class="testi-result"><span aria-hidden="true">⏰</span> Economiza 4h por semana de
+                                burocracia</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="testi-card reveal reveal-delay-4">
+                        <blockquote class="testi-quote">
+                            <p>
+                                Minha maior dificuldade era precificar corretamente. Com o
+                                FinMEI, consegui calcular o custo real dos meus serviços e
+                                percebi que estava cobrando 20% abaixo do que deveria.
+                                Reajustei e meu faturamento cresceu sem precisar de mais
+                                clientes.
+                            </p>
+                        </blockquote>
+                        <figcaption>
+                            <div class="testi-author">
+                                <div class="testi-avatar ta-gold" aria-hidden="true">J</div>
+                                <div>
+                                    <p class="testi-name">Juliana Ferreira</p>
+                                    <p class="testi-role">Nutricionista · Porto Alegre</p>
+                                </div>
+                            </div>
+                            <p class="testi-result"><span aria-hidden="true">📈</span> Aumentou o faturamento em 20% sem
+                                novos
+                                clientes</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ PREÇO ============================ -->
+        <section id="pricing" aria-labelledby="pricing-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-label">Preço</p>
+                    <h2 class="section-title" id="pricing-title">Simples como deve ser</h2>
+                    <p class="section-sub">Um plano. Tudo incluído. Sem pegadinha.</p>
+                </div>
+
+                <div class="pricing-card reveal">
+                    <p class="pricing-badge"><span aria-hidden="true">🎁</span> 14 dias grátis — sem cartão de crédito
+                    </p>
+                    <div class="pricing-body">
+                        <h3 class="pricing-plan">Plano MEI Completo</h3>
+                        <p class="pricing-price">
+                            <span class="price-currency">R$</span>
+                            <span class="price-value">49</span>
+                            <span class="price-period">/mês</span>
+                        </p>
+                        <p class="pricing-trial">Primeiros 14 dias completamente grátis</p>
+
+                        <ul class="pricing-features" aria-label="O que está incluído">
+                            <li>Importação automática de transações bancárias</li>
+                            <li>Categorização inteligente de despesas e receitas</li>
+                            <li>Painel de lucro real e margem de cada serviço</li>
+                            <li>Cálculo automático de impostos MEI (DAS)</li>
+                            <li>Relatórios mensais prontos para o contador</li>
+                            <li>Separação automática PF vs PJ</li>
+                            <li>App iOS e Android incluído</li>
+                            <li>Suporte humano via WhatsApp</li>
+                        </ul>
+
+                        <!-- TODO: href real do cadastro -->
+                        <a href="#" class="btn btn-primary pricing-cta">
+                            Quero começar grátis agora <span aria-hidden="true">→</span>
+                        </a>
+
+                        <p class="pricing-guarantee">
+                            <span aria-hidden="true">🛡️</span>
+                            Garantia de 7 dias com reembolso total, sem perguntas
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ FAQ ============================ -->
+        <section id="faq" aria-labelledby="faq-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-label">Perguntas frequentes</p>
+                    <h2 class="section-title" id="faq-title">Respondendo suas dúvidas</h2>
+                </div>
+
+                <div class="faq-list reveal">
+                    <div class="faq-item">
+                        <h3>
+                            <button class="faq-question" id="faq-q1" aria-expanded="false" aria-controls="faq-a1">
+                                Preciso conectar minha conta bancária obrigatoriamente?
+                                <span class="faq-chevron" aria-hidden="true">▾</span>
+                            </button>
+                        </h3>
+                        <div class="faq-answer" id="faq-a1" role="region" aria-labelledby="faq-q1">
+                            <div class="faq-answer-inner">
+                                <p>
+                                    Não! A integração bancária acelera muito o processo, mas você
+                                    também pode registrar entradas e saídas manualmente pelo app.
+                                    Funciona nos dois modos — use o que for mais confortável para
+                                    você.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button class="faq-question" id="faq-q2" aria-expanded="false" aria-controls="faq-a2">
+                                Meus dados bancários ficam seguros?
+                                <span class="faq-chevron" aria-hidden="true">▾</span>
+                            </button>
+                        </h3>
+                        <div class="faq-answer" id="faq-a2" role="region" aria-labelledby="faq-q2">
+                            <div class="faq-answer-inner">
+                                <p>
+                                    Sim. Usamos criptografia no padrão do mercado financeiro. A
+                                    integração é feita via Open Finance (regulamentado pelo Banco
+                                    Central) — nunca temos acesso à sua senha bancária. Seus
+                                    dados nunca são vendidos.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button class="faq-question" id="faq-q3" aria-expanded="false" aria-controls="faq-a3">
+                                Funciona para todos os tipos de MEI?
+                                <span class="faq-chevron" aria-hidden="true">▾</span>
+                            </button>
+                        </h3>
+                        <div class="faq-answer" id="faq-a3" role="region" aria-labelledby="faq-q3">
+                            <div class="faq-answer-inner">
+                                <p>
+                                    Sim. O FinMEI funciona para MEIs de serviços, comércio e
+                                    indústria. Seja você freelancer, prestador de serviços,
+                                    vendedor ou qualquer atividade permitida no MEI — a
+                                    plataforma se adapta ao seu tipo de negócio.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button class="faq-question" id="faq-q4" aria-expanded="false" aria-controls="faq-a4">
+                                Como funcionam os 14 dias grátis?
+                                <span class="faq-chevron" aria-hidden="true">▾</span>
+                            </button>
+                        </h3>
+                        <div class="faq-answer" id="faq-a4" role="region" aria-labelledby="faq-q4">
+                            <div class="faq-answer-inner">
+                                <p>
+                                    Você cria sua conta sem informar cartão de crédito e tem
+                                    acesso total a todas as funcionalidades por 14 dias. Se
+                                    gostar — e você vai gostar — basta adicionar uma forma de
+                                    pagamento para continuar. Se não quiser seguir, é só não
+                                    renovar. Sem cobranças automáticas surpresa.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button class="faq-question" id="faq-q5" aria-expanded="false" aria-controls="faq-a5">
+                                Posso cancelar a qualquer momento?
+                                <span class="faq-chevron" aria-hidden="true">▾</span>
+                            </button>
+                        </h3>
+                        <div class="faq-answer" id="faq-a5" role="region" aria-labelledby="faq-q5">
+                            <div class="faq-answer-inner">
+                                <p>
+                                    Sim, sem burocracia. Você cancela com 1 clique dentro da
+                                    plataforma, sem precisar ligar ou mandar e-mail. E se
+                                    cancelar nos primeiros 7 dias após assinar, devolvemos 100%
+                                    do valor cobrado — sem perguntas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button class="faq-question" id="faq-q6" aria-expanded="false" aria-controls="faq-a6">
+                                O FinMEI substitui o contador?
+                                <span class="faq-chevron" aria-hidden="true">▾</span>
+                            </button>
+                        </h3>
+                        <div class="faq-answer" id="faq-a6" role="region" aria-labelledby="faq-q6">
+                            <div class="faq-answer-inner">
+                                <p>
+                                    Depende. Para o MEI simples, o FinMEI cobre o essencial —
+                                    controle financeiro, cálculo do DAS, relatórios. Se você
+                                    precisar de um contador para o IRPF ou para mudança de
+                                    regime tributário, o FinMEI gera relatórios completos que
+                                    facilitam o trabalho contábil e reduzem o custo com contador.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button class="faq-question" id="faq-q7" aria-expanded="false" aria-controls="faq-a7">
+                                E se eu tiver dúvidas durante o uso?
+                                <span class="faq-chevron" aria-hidden="true">▾</span>
+                            </button>
+                        </h3>
+                        <div class="faq-answer" id="faq-a7" role="region" aria-labelledby="faq-q7">
+                            <div class="faq-answer-inner">
+                                <p>
+                                    Nossa equipe responde via WhatsApp em até 4 horas em dias
+                                    úteis. Também temos uma base de conhecimento com vídeos
+                                    curtos que explicam cada funcionalidade. Você nunca vai ficar
+                                    preso sem saber o que fazer.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ CTA FINAL ============================ -->
+        <section id="final-cta" aria-labelledby="cta-title">
+            <div class="container">
+                <div class="cta-box reveal">
+                    <div class="cta-box-glow" aria-hidden="true"></div>
+
+                    <h2 class="cta-title" id="cta-title">
+                        Comece o próximo mês sabendo exatamente
+                        <span class="accent">o que tem no caixa.</span>
+                    </h2>
+
+                    <p class="cta-sub">
+                        Mais de 3.000 MEIs já estão no controle. Junte-se a eles agora — os
+                        primeiros 14 dias são grátis.
+                    </p>
+
+                    <div class="cta-actions">
+                        <a href="#pricing" class="btn btn-primary btn-lg">
+                            Quero começar agora — é grátis <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+
+                    <p class="cta-fine">
+                        Sem cartão de crédito · Cancela quando quiser · Garantia de 7 dias
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============================ FOOTER ============================ -->
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <a href="#" class="logo" aria-label="FinMEI, voltar ao topo">Fin<span>MEI</span></a>
+
+                <!-- TODO: links reais (Privacidade e Termos são obrigatórios por LGPD se coletar dados) -->
+                <nav class="footer-links" aria-label="Links do rodapé">
+                    <a href="#">Privacidade</a>
+                    <a href="#">Termos de uso</a>
+                    <a href="#">Segurança</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contato</a>
+                </nav>
+
+                <p class="footer-copy">© 2026 FinMEI · Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        (function () {
+            var els = document.querySelectorAll(".reveal");
+            if (!("IntersectionObserver" in window)) {
+                els.forEach(function (el) { el.classList.add("visible"); });
+                return;
+            }
+            var io = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            io.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+            );
+            els.forEach(function (el) { io.observe(el); });
+        })();
+
+        // FAQ (acordeão): um aberto por vez, estado exposto via aria-expanded
+        (function () {
+            var items = document.querySelectorAll(".faq-item");
+            items.forEach(function (item) {
+                var btn = item.querySelector(".faq-question");
+                btn.addEventListener("click", function () {
+                    var wasOpen = item.classList.contains("open");
+                    items.forEach(function (i) {
+                        i.classList.remove("open");
+                        i.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+                    });
+                    if (!wasOpen) {
+                        item.classList.add("open");
+                        btn.setAttribute("aria-expanded", "true");
+                    }
+                });
+            });
+        })();
+
+        // Faíscas no hover dos botões (só em dispositivos com mouse e sem preferência por movimento reduzido)
+        (function () {
+            var canHover = window.matchMedia("(hover: hover)").matches;
+            var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (!canHover || reduce) return;
+            document.querySelectorAll(".btn-primary").forEach(function (btn) {
+                btn.addEventListener("mouseenter", function (e) {
+                    for (var i = 0; i < 6; i++) {
+                        var s = document.createElement("span");
+                        s.className = "spark";
+                        s.style.left = e.clientX + (Math.random() - 0.5) * 40 + "px";
+                        s.style.top = e.clientY + (Math.random() - 0.5) * 20 + "px";
+                        s.style.setProperty("--dx", (Math.random() - 0.5) * 60 + "px");
+                        s.style.setProperty("--dy", -(20 + Math.random() * 30) + "px");
+                        document.body.appendChild(s);
+                        setTimeout(function (el) { el.remove(); }, 700, s);
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>
